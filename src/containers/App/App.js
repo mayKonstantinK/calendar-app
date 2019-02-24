@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
+import Calendar from 'react-big-calendar';
+import moment from 'moment';
+import Loader from '../../components/Loader';
 
 import Api from '../../services/api';
+import { convertData } from '../../utils/common';
+
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './App.css';
+
+const localizer = Calendar.momentLocalizer(moment);
 
 class App extends Component {
   state = {
@@ -10,16 +18,29 @@ class App extends Component {
 
   componentDidMount = () => {
     Api.fetchCalendarEvents().then((events) => {
-      this.setState({events});
+      this.setState({events: convertData(events)});
     });
   }
 
   render() {
+    const { events } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
+        <div className="App-header">
           <div className="App-title">Calendar App</div>
-        </header>
+        </div>
+        {events ? (
+          <Calendar
+            className="Calendar"
+            localizer={localizer}
+            defaultDate={new Date()}
+            defaultView="month"
+            events={events}
+          />
+        ) : (
+          <Loader />
+        )}
       </div>
     );
   }

@@ -1,6 +1,6 @@
 class ApiService {
   constructor() {
-    this.apiUrl = 'https://assessments.bzzhr.net/calendar/?format=json';
+    this.apiUrl = 'https://assessments.bzzhr.net/calendar/?format=json&paginate_by=3000';
     this.nextPage = null;
   }
 

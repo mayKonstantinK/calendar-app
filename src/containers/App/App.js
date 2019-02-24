@@ -22,6 +22,12 @@ class App extends Component {
     });
   }
 
+  eventStyleGetter = (event) => {
+    return {style: {
+      backgroundColor: event.category
+    }};
+  }
+
   render() {
     const { events } = this.state;
 
@@ -37,6 +43,7 @@ class App extends Component {
             defaultDate={new Date()}
             defaultView="month"
             events={events}
+            eventPropGetter={(this.eventStyleGetter)}
           />
         ) : (
           <Loader />
